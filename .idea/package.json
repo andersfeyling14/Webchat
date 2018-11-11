@@ -1,0 +1,8 @@
+{
+  "name": "webchat",
+  "version": "1.0.0",
+  "description": "Simple webchat for Solv",
+  "dependencies": {
+    
+  }
+}

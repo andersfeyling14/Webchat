@@ -1,0 +1,8 @@
+# ignore node_module
+node_module
+
+#ignore package-lock
+package-lock
+
+"ignore iml file
+iml
