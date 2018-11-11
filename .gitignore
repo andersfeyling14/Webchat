@@ -1,8 +1,14 @@
 # ignore node_module
-node_module
+node_modules
 
 #ignore package-lock
-package-lock
+*.package-lock
 
 "ignore iml file
-iml
+*.iml
+
+#ignore xml
+*.xml
+
+#ignore the package-lock.json
+package-lock.json
