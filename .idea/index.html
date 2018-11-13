@@ -3,7 +3,10 @@
     <head>
         <title>Webchat</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
         <style>
             html, body {
@@ -23,26 +26,28 @@
             }
             body {
                 font: 13px
-                Helvetica, Arial;
             }
-            form {
+            #chat-form {
                 background: #000;
                 padding: 3px;
                 position: fixed;
                 bottom: 0;
                 width: 100%;
             }
-            form input {
+            #form-input input {
                 border: 0;
                 padding: 10px;
                 width: 90%;
                 margin-right: .5%;
             }
-            form button {
+            ¤chat-form button {
                 width: 9%;
-                background: rgb(130, 224, 255);
+                background: #5c826b;
                 border: none;
                 padding: 10px;
+            }
+            #chat-interaction{
+
             }
             #chat-window {
                 list-style-type: none;
@@ -58,37 +63,89 @@
         </style>
     </head>
     <body>
-        <ul id="chat-window"> </ul>>
-        <form action="">
-            <input id="message" autocomplete="off" />
-            <button>Send</button>
-        </form>
-        <script src="/socket.io/socket.io.js"></script>
-        <!--<script src="https://code.jquery.com/jquery-1.11.1.js"></script> -->
-        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-        <script>
-            $(function () {
-                const socket = io(); //Load socket.io-client
+    <div class="container">
+        <!--
+        <div id="user-interaction" class="row">
+            <div id="username-input" class="row">
+                <form id="username-form" action="">
+                    <input id="username" autocomplete="off" />
+                    <button>Login</button>
+                </form>
+            </div>
+        </div>
+        -->
+        <div id="text-area" class="row">
+            <div id="chat-interaction" class="row">
+                <ul id="chat-window"> </ul>>
+                <form id="chat-form" action="">
+                    <input id="message" autocomplete="off" />
+                    <button>Send</button>
+                </form>
+            </div>
 
-                // Send a message as a custom `chat message` event to server.
-                $("form").submit(function () {
+            <div id="list-users" class="col-md-4">
+                <div class="well">
+                    <h3>Online Users</h3>
+                    <ul class="list-group" id="users"></ul>
+                </div>
+            </div>
+        </div>
 
-                    socket.emit("chat-message", $("#message").val());
-                    $("#message").val(""); //clear message box
-                    return false;
+        <div class="col-md-8">
 
-                    /*
-                    io.broadcast.emit("chat-message", $("#message").val());
-                    $("#message").val(""); //clear message box
-                    return false;
+        </div>
+    </div>
+
+
+
+
+            <script>
+                $(function () {
+
+                    /*    JQuery variables      */
+                    const socket = io(); //Load socket.io-client
+                    $("#user-interaction")
+                    $("#username-input");
+
+                    /* If user chooses own name
+                        $("username-form").submit(function (e) {
+                        e.preventDefault();
+                        socket.emit("new-user", $("#username").val(), function (data) {                                $("user-interaction").hide();
+                                $("#chat-interaction").show();
+                            }
+                        });
+                        $("username").val("");
+                    });
                     */
-                });
 
-                socket.on("chat-message", function (msg) {
-                    $("#chat-window").append($("<li>").text(msg));
+                    socket.on("get-users", function (data) {
+                        var tmp_html = ``;
+                        for (var i = 0, n = data.length; i < n; i++){
+                            html += `<ul class="list-group-item"`>+data[i]+`</ul>`;
+                        }
+                        $("#users").html(tmp_html);
+                    })
+
+                    $("#chat-window");
+                    $("chat-form").submit(function (e) {// Send a message as a custom `chat message` event to server.
+                        e.preventDefault();
+                        socket.emit("chat-message", $("#message").val());
+                        $("#message").val(""); //clear message box
+                        return false;
+
+                        /*
+                        io.broadcast.emit("chat-message", $("#message").val());
+                        $("#message").val(""); //clear message box
+                        return false;
+                        */
+                    });
+
+                    socket.on("chat-message", function (data) {
+                        $("#chat-window").append($("<li>").text(<strong> data.username </strong>).text(data.username+": "+data.msg));
+                    });
                 });
-            });
-        </script>
+            </script>
+    </div>
     </body>
 </html>
