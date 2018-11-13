@@ -1,0 +1,9 @@
+{
+  "name": "webchat",
+  "version": "1.0.0",
+  "description": "Simple webchat for Solv",
+  "dependencies": {
+    "@polymer/lit-element": "^0.6.3",
+    "socket.io": "^2.1.1"
+  }
+}
