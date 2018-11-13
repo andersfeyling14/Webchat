@@ -1,3 +1,5 @@
+//import {LitElement, html} from '@polymer/lit-element';
+
 const app = require("express")();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -30,13 +32,14 @@ io.on("connection", function (socket) {
         console.log("User disconnected. %s users connected", connections.length);
     })
 
-    //Send message
+    //Send message to receivers
     socket.on("chat-message", function (data) {
         console.log("message: ", data);
 
         // $$ Send msg to sockets $$
         //io.emit("chat-message", {msg: data}); //send to everyone INCLUDING sender
-        socket.broadcast.emit("chat-message", {msg: data, user: socket.username}); //send to everyone EXCLUDING sender
+        //socket.broadcast.emit("chat-message", {msg: data, user: socket.username}); //send to everyone EXCLUDING sender
+        socket.broadcast.emit("chat-message", {msg: data}); //send to everyone EXCLUDING sender
     });
 
     //  $$ New user $$
@@ -51,9 +54,9 @@ io.on("connection", function (socket) {
     }
 });
 
-/*
-    Each socket fires unique `connection` and `disconnect` events.
-*/
+
+ //   Each socket fires unique `connection` and `disconnect` events.
+
 /*io.on("connection", function (socket) {
     socket.on("chat-message", function (msg) {
         console.log("message: ", msg);

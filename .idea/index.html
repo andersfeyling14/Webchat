@@ -105,8 +105,6 @@
 
                     /*    JQuery variables      */
                     const socket = io(); //Load socket.io-client
-                    $("#user-interaction")
-                    $("#username-input");
 
                     /* If user chooses own name
                         $("username-form").submit(function (e) {
@@ -127,9 +125,7 @@
                         $("#users").html(tmp_html);
                     })
 
-                    $("#chat-window");
                     $("chat-form").submit(function (e) {// Send a message as a custom `chat message` event to server.
-                        e.preventDefault();
                         socket.emit("chat-message", $("#message").val());
                         $("#message").val(""); //clear message box
                         return false;
